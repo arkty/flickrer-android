@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Flickrer</string>
+    <string name="search_input_hint">Search...</string>
 </resources>
