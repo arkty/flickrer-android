@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
+import com.google.android.material.appbar.MaterialToolbar
 import me.arkty.flickrer.BR
-import me.arkty.flickrer.core.android.extensions.observeNotNull
+import me.arkty.flickrer.R
 import me.arkty.flickrer.core.android.utils.LayoutGroupInflation
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
@@ -29,6 +31,7 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.setVariable(BR.v, this)
         binding.setVariable(BR.vm, vm)
     }
@@ -39,11 +42,16 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         binding.setVariable(BR.vm, null)
     }
 
-    fun <T> LiveData<T>.observe(observer: (value: T?) -> Unit) {
-        this.observe(viewLifecycleOwner, observer)
-    }
+    open fun displayBack() = true
 
-    fun <T> LiveData<T?>.observeNotNull(observer: (value: T) -> Unit) {
-        this.observeNotNull(viewLifecycleOwner, observer)
+    private fun setupBackNavigation() {
+        val toolbar = view?.findViewById<MaterialToolbar?>(R.id.toolbar)
+        (activity as AppCompatActivity).let {
+            it.setSupportActionBar(toolbar)
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            toolbar?.setNavigationOnClickListener {
+                activity?.onBackPressed()
+            }
+        }
     }
 }

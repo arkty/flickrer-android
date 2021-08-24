@@ -12,6 +12,10 @@
         <variable
             name="vm"
             type="me.arkty.flickrer.ui.search.SearchViewModel" />
+
+        <import
+            alias="TextUtils"
+            type="android.text.TextUtils" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,11 +30,29 @@
             android:background="@drawable/bg_solid_rounded_8"
             android:drawableStart="@drawable/ic_search"
             android:hint="@string/search_input_hint"
+            android:lines="1"
             android:padding="8dp"
             android:text="@={vm.query}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/noQueryLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:gravity="center"
+            android:paddingStart="@dimen/margin_big"
+            android:paddingEnd="@dimen/margin_big"
+            android:text="@string/query_hint_label"
+            android:textAppearance="@style/Text.Body"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchInput"
+            app:visibleIf="@{TextUtils.isEmpty(vm.query)}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchResultList"
@@ -40,7 +62,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchInput" />
+            app:layout_constraintTop_toBottomOf="@id/searchInput"
+            app:visibleIf="@{!TextUtils.isEmpty(vm.query)}" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/moreLoading"

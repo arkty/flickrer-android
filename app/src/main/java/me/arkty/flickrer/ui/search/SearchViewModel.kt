@@ -27,18 +27,12 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    val isLoading = MutableLiveData(false)
     val errorMessage = MutableStateFlow<String?>(null)
 
-    /**
-     * Photos is
-     */
     val photos = pager.flow.catch {
-        isLoading.postValue(false)
         errorMessage.emit(it.message)
     }.onEach {
         errorMessage.emit(null)
-        isLoading.postValue(false)
     }.cachedIn(viewModelScope)
 
     init {
@@ -54,7 +48,6 @@ class SearchViewModel @Inject constructor(
             !it.isNullOrBlank()
         }.debounceInput().onEach {
             Timber.d("query = ${it}")
-            isLoading.postValue(true)
             errorMessage.emit(null)
             currentDataSource?.invalidate()
         }.launchIn(viewModelScope)

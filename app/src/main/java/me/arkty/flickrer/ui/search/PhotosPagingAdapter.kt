@@ -9,13 +9,19 @@ import me.arkty.flickrer.utils.adapter.DataBindingViewHolder
 import me.arkty.flickrer.utils.adapter.DataClassDiff
 import javax.inject.Inject
 
-class PhotosPagingAdapter @Inject constructor(): PagingDataAdapter<
+class PhotosPagingAdapter @Inject constructor() : PagingDataAdapter<
         PhotoEntity,
         DataBindingViewHolder<ItemPhotoBinding>>(
     DataClassDiff()
 ) {
+    var onPhotoSelected: (PhotoEntity) -> Unit = {}
+
     override fun onBindViewHolder(holder: DataBindingViewHolder<ItemPhotoBinding>, position: Int) {
-        holder.binding?.item = getItem(position)
+        val photo = getItem(position)
+        holder.binding?.item = photo
+        holder.itemView.setOnClickListener {
+            photo?.let(onPhotoSelected)
+        }
     }
 
     override fun onCreateViewHolder(

@@ -2,4 +2,10 @@
     <string name="app_name">Flickrer</string>
     <string name="search_input_hint">Search...</string>
     <string name="no_result_found">No results found</string>
+    <string name="photo_title">Photo</string>
+    <string name="save_tip">Long press on image to save photo on device\nor click on save icon.\nYou will see downloading progress in notifications inside status bar</string>
+    <string name="save">Save</string>
+    <string name="downloading_title">Flicker downloading</string>
+    <string name="download_started">Download started</string>
+    <string name="query_hint_label">Start typing to search...</string>
 </resources>

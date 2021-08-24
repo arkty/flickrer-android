@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,16 +26,34 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRecycler()
+        bindDataToAdapter()
+        processLoadingState()
+
+        photosAdapter.onPhotoSelected = {
+            findNavController().navigate(
+                SearchFragmentDirections.toPhoto(
+                    it
+                )
+            )
+        }
+    }
+
+    private fun setupRecycler() {
         binding.searchResultList.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.searchResultList.adapter = photosAdapter
+    }
 
+    private fun bindDataToAdapter() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             vm.photos.collectLatest {
                 photosAdapter.submitData(it)
             }
         }
+    }
 
-        // Process loading state
+    private fun processLoadingState() {
         photosAdapter.addLoadStateListener {
 
             // drop UI state
@@ -61,7 +80,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 binding.emptyResultsLabel.visibility = View.VISIBLE
             }
 
-            // We can also add error processing and initial message here
+            // We can also add error processing here
         }
     }
 }

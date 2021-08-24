@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:drawable="@color/white" />
+    <item
+        android:drawable="@drawable/ic_launcher_foreground"
+        android:end="@dimen/margin_big"
+        android:gravity="center"
+        android:start="@dimen/margin_big"
+        tools:targetApi="m" />
+</layer-list>

@@ -7,5 +7,22 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="me.arkty.flickrer.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/toPhoto"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="me.arkty.flickrer.ui.photo.PhotoFragment"
+        android:label="PhotoFragment">
+
+        <!--
+        We should pass photo id & secret here to get photo info by id,
+        but to simplify i will pass PhotoEntity directly
+        -->
+        <argument
+            android:name="photo"
+            app:argType="me.arkty.flickrer.data.remote.data.PhotoEntity" />
+    </fragment>
 </navigation>
