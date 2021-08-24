@@ -68,6 +68,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
 
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
     // network
     def okhttp_version = "4.9.1"
     def retrofit_version = "2.9.0"

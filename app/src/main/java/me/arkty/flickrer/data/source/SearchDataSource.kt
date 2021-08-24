@@ -34,6 +34,9 @@ class SearchDataSource(
                     null
                 }
 
+                // after loading we can also warm Glide cache:
+                // prefetch images to show pictures faster
+
                 LoadResult.Page(
                     res.photo,
                     prevPage,

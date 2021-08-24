@@ -1,6 +1,7 @@
 package me.arkty.flickrer.data.remote.data
 
 import kotlinx.serialization.Serializable
+import me.arkty.flickrer.data.remote.FlickrUrlBuilder
 
 @Serializable
 data class PhotoEntity(
@@ -10,4 +11,8 @@ data class PhotoEntity(
     val server: String,
     val farm: Int,
     val title: String,
-)
+) {
+
+    // this actually should be moved to UI data, but in this case we can reuse it
+    val thumbUrl by lazy { FlickrUrlBuilder.buildThumbUrl(this) }
+}
