@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:imageUrl="@{item.thumbUrl}"
+            app:imageUrlSafe="@{item.thumbUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"

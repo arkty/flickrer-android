@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.collectLatest
 import me.arkty.flickrer.core.android.BaseFragment
 import me.arkty.flickrer.core.android.utils.LayoutGroupInflation
 import me.arkty.flickrer.databinding.FragmentSearchBinding
+import me.arkty.flickrer.ml.NsfwModel
+import me.arkty.flickrer.ml.SavedModel
+import org.tensorflow.lite.support.image.TensorImage
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -82,5 +85,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
             // We can also add error processing here
         }
+    }
+
+    private fun nsfwDetect() {
+
+
     }
 }
