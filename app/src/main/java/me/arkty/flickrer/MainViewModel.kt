@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor(
         launch {
             withContext(Dispatchers.IO) {
                 try {
-                    api.search("Dogs").also {
-                        Timber.d("items = ${it.photo}")
-                    }
+//                    api.search("Dogs").also {
+//                        //Timber.d("items = ${it.photo}")
+//                    }
                 } catch (e: Exception) {
                     Timber.e(e)
                 }

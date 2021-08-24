@@ -7,14 +7,17 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import me.arkty.flickrer.BuildConfig
 import me.arkty.flickrer.data.remote.FlickrApi
 import me.arkty.flickrer.data.remote.interceptors.FlickrApiKeyInterceptor
 import me.arkty.flickrer.data.remote.interceptors.FlickrJsonFormatInterceptor
 import me.arkty.flickrer.data.remote.interceptors.FlickrMethodInterceptor
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -22,6 +25,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+
+    private val json = Json(Json) {
+        ignoreUnknownKeys = true
+    }
 
     @Provides
     @Singleton
@@ -46,13 +53,21 @@ class NetworkModule {
             .build()
     }
 
-    @ExperimentalSerializationApi
     @Provides
     @Singleton
-    fun provideApi(client: OkHttpClient): FlickrApi {
+    @ExperimentalSerializationApi
+    fun provideConverterFactory(): Converter.Factory {
+        return json.asConverterFactory(
+            "application/json".toMediaType()
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideApi(client: OkHttpClient, converterFactory: Converter.Factory): FlickrApi {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.FLICKR_API_BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(converterFactory)
             .client(client)
             .build().create(FlickrApi::class.java)
     }

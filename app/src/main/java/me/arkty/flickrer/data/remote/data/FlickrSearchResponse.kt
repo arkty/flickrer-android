@@ -6,6 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FlickrSearchResponse(
     @SerialName("stat")
-    val stat: String
+    val stat: String,
+
+    @SerialName("photos")
+    val photos: PhotosPage
 ) {
 }

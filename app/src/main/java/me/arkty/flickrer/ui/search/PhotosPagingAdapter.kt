@@ -7,8 +7,9 @@ import me.arkty.flickrer.data.remote.data.PhotoEntity
 import me.arkty.flickrer.databinding.ItemPhotoBinding
 import me.arkty.flickrer.utils.adapter.DataBindingViewHolder
 import me.arkty.flickrer.utils.adapter.DataClassDiff
+import javax.inject.Inject
 
-class PhotosPagingAdapter : PagingDataAdapter<
+class PhotosPagingAdapter @Inject constructor(): PagingDataAdapter<
         PhotoEntity,
         DataBindingViewHolder<ItemPhotoBinding>>(
     DataClassDiff()

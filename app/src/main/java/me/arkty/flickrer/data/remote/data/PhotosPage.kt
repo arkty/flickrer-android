@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PhotosResponse(
+data class PhotosPage(
     @SerialName("page")
     val page: Int,
 
