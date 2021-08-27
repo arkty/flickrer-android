@@ -19,6 +19,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "FLICKR_API_BASE_URL", "\"https://api.flickr.com/\""
         buildConfigField "String", "FLICKR_API_KEY",  "\"47e19c389f683d0a002602a870b12b89\""
+
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {

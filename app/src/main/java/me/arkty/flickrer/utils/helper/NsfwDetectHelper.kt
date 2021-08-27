@@ -28,7 +28,7 @@ class NsfwDetectHelper @Inject constructor(
         .add(NormalizeOp(0f, 255f))
         .build()
 
-    fun isSafeForWork(b: Bitmap, tag: String = "") : Boolean {
+    fun isSafeForWork(b: Bitmap, tag: String = ""): Boolean {
         synchronized(NsfwDetectHelper::class) {
             val size = min(b.width, b.height)
             val squared = ThumbnailUtils.extractThumbnail(b, size, size)
@@ -41,11 +41,17 @@ class NsfwDetectHelper @Inject constructor(
             val outputs = model.process(buffer)
             val probability = outputs.outputFeature0AsTensorBuffer
             Timber.d("probability[$tag]: ${probability.floatArray.joinToString(", ")}")
+            return probability.floatArray[LABEL_NEUTRAL_INDEX] > NSFW_FEATURE_THRESHOLD
         }
-        return true
     }
 
-    companion object{
+    companion object {
+        private const val LABEL_DRAWINGS_INDEX = 0
+        private const val LABEL_HENTAI_INDEX = 1
+        private const val LABEL_NEUTRAL_INDEX = 2
+        private const val LABEL_PORN_INDEX = 3
+        private const val LABEL_SEXY_INDEX = 4
+        private const val NSFW_FEATURE_THRESHOLD = 0.6f
         //const val LABELS = listOf()
     }
 }
