@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
-import me.arkty.flickrer.ml.SavedModel
+import me.arkty.flickrer.ml.NsfwModel
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.common.ops.QuantizeOp
@@ -20,7 +20,7 @@ import kotlin.math.min
 class NsfwDetectHelper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private val model = SavedModel.newInstance(context)
+    private val model = NsfwModel.newInstance(context)
 
     // type: float32[1,224,224,3]
     private val imageProcessor = ImageProcessor.Builder()
@@ -37,9 +37,10 @@ class NsfwDetectHelper @Inject constructor(
                 it.load(squared)
                 imageProcessor.process(it)
             }.tensorBuffer
-            //Timber.d("buffer = ${buffer.floatArray.joinToString(",")}")
+
             val outputs = model.process(buffer)
             val probability = outputs.outputFeature0AsTensorBuffer
+
             Timber.d("probability[$tag]: ${probability.floatArray.joinToString(", ")}")
             return probability.floatArray[LABEL_NEUTRAL_INDEX] > NSFW_FEATURE_THRESHOLD
         }
